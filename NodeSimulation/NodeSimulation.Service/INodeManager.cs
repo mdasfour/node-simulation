@@ -1,8 +1,5 @@
 ﻿using NodeSimulation.Data.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NodeSimulation.Service
 {
@@ -12,25 +9,21 @@ namespace NodeSimulation.Service
 		/// Add new node to the manager
 		/// </summary>
 		/// <param name="node"></param>
-		void AddNode(INode node);
+		//string AddNode(INode node);
 
 		/// <summary>
 		/// Remove node from the manager
 		/// </summary>
 		/// <param name="nodeId">ID of the node to remove</param>
+		/// <returns>Returns a message to the user whether it was successful in removing the node or not.  If there are any errors, it returns a message to the user</returns>
 		string RemoveNode(int nodeId);
 
-		/// <summary>
-		/// Retrieve a managed node
-		/// </summary>
-		/// <param name="nodeId">ID of the node to retrieve</param>
-		/// <returns></returns>
-		//List<NodesDAO> GetNode(int nodeId);
 
 		/// <summary>
-		/// Retrieve all nodes added to the manager
+		/// Retrieve a node or all nodes added to the manager
+		/// <param name="nodeId">ID of the node to retrieve (Optional)</param>
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>The node or all the list of nodes that have not been deleted</returns>
 		List<NodesDAO> GetNodes(int? nodeId);
 	}
 }

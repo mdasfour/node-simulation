@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using NodeSimulation.Data.Models;
 using NodeSimulation.Service;
@@ -26,21 +22,31 @@ namespace NodeSimulation.Api.Controllers
 
 
 		[HttpPost]
-		[Route("Nodes")]
-		public string Nodes([FromBody]NodesDTO node)
+		[Route("MaxLimits")]
+		public string MaxLimits([FromBody]Nodes node)
 		{
 			NodeManagerService newNode = new NodeManagerService();
 
 			return newNode.SetNodeMaxLimits(node);
+
 		}
 
 		[HttpPatch]
 		[Route("Online")]
-		public dynamic Online(int? nodeId)
+		public string Online(int? nodeId)
 		{
 			NodeManagerService node = new NodeManagerService();
 
 			return node.SetNodeOnline(nodeId);
+		}
+
+		[HttpPatch]
+		[Route("Offline")]
+		public string Offline(int? nodeId)
+		{
+			NodeManagerService node = new NodeManagerService();
+
+			return node.SetNodeOffline(nodeId);
 		}
 
 		[HttpDelete]
@@ -52,7 +58,7 @@ namespace NodeSimulation.Api.Controllers
 			return node.RemoveNode(nodeId);
 		}
 
-		
+
 
 
 	}

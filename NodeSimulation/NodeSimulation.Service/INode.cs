@@ -1,8 +1,5 @@
 ﻿using NodeSimulation.Data.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NodeSimulation.Service
 {
@@ -45,12 +42,11 @@ namespace NodeSimulation.Service
 		/// Bring the node online
 		/// </summary>
 		Nodes SetOnline(Nodes node);
-		//bool SetOnline();
 
 		/// <summary>
 		/// Bring the node offline
 		/// </summary>
 		/// <returns></returns>
-		void SetOffline();
+		Nodes SetOffline(Nodes node);
 	}
 }

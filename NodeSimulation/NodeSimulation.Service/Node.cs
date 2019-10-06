@@ -1,14 +1,11 @@
 ﻿using NodeSimulation.Data.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NodeSimulation.Service
 {
 	public class Node : INode
 	{
-		public readonly Random _rnd;
+		private readonly Random _rnd;
 
 		#region Properties
 		// Basic properties
@@ -27,75 +24,78 @@ namespace NodeSimulation.Service
 		#endregion
 
 		#region Initialization
-		//public Node(int nodeId, string city)
-		//{
+		public Node(int nodeId, string city)
+		{
 
-		//}
-		//public Node(int nodeId, string city, Random rnd)
-		//{
-		//	_rnd = rnd;
 
-		//	NodeId = nodeId;
-		//	City = city;
+			_rnd = new Random();
 
-		//	OnlineTime = DateTime.Now;
+			NodeId = nodeId;
+			City = city;
 
-		//	IsOnline = false;
+			OnlineTime = DateTime.Now;
 
-		//	ResetMetrics();
-		//}
+			IsOnline = false;
+
+			ResetMetrics();
+		}
 
 		#endregion
 
 		#region Public Methods
-		//public bool SetOnline()
 		public Nodes SetOnline(Nodes node)
 		{
-			IsOnline = true;
-			SimulateRandomMetrics();
 
-			node.IsOnline = IsOnline;
-			//node.UploadUtilization = this.UploadUtilization;
-			//node.DownloadUtilization = this.DownloadUtilization;
-			//node.ErrorRate = this.ErrorRate;
-			//node.ConnectedClients = this.ConnectedClients;
-
+			node.IsOnline = true;
+			node = SimulateRandomMetrics(node);
 
 			return node;
 
-			//return IsOnline;
-
 		}
 
-		public void SetOffline()
+		public Nodes SetOffline(Nodes node)
 		{
-			IsOnline = false;
 
-			ResetMetrics();
+			node.IsOnline = false;
+
+			node = ResetMetrics(node);
+
+			return node;
 		}
 		#endregion
 
 		#region Private Methods
 		private void ResetMetrics()
 		{
-			// Clear metrics back to 0.
-
-			ConnectedClients = 0;
-
 			UploadUtilization = 0.0M;
 			DownloadUtilization = 0.0M;
 			ErrorRate = 0.0M;
+			ConnectedClients = 0;
+
 		}
 
-		public void SimulateRandomMetrics()
+		private Nodes ResetMetrics(Nodes node)
+		{
+			// Clear metrics back to 0.
+			node.UploadUtilization = 0.0M;
+			node.DownloadUtilization = 0.0M;
+			node.ErrorRate = 0.0M;
+			node.ConnectedClients = 0;
+
+			return node;
+		}
+
+		public Nodes SimulateRandomMetrics(Nodes node)
 		{
 			// Generate random values to simulate metrics.
+			if(node != null) { 
+				node.ConnectedClients = _rnd.Next(1, 500);
+				node.UploadUtilization = (decimal)_rnd.NextDouble()*100;
+				node.DownloadUtilization = (decimal)_rnd.NextDouble()*100;
+				node.ErrorRate = (decimal)_rnd.NextDouble()*100;
+			}
 
-			ConnectedClients = _rnd.Next(1, 500);
-			UploadUtilization = (decimal)_rnd.NextDouble();
-			DownloadUtilization = (decimal)_rnd.NextDouble();
-			ErrorRate = (decimal)_rnd.NextDouble();
-
+			return node;
 		}
 		#endregion
 	}
