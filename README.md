@@ -34,8 +34,12 @@ This division keeps the project organized and gives the developer the ability to
 
 ## How to run this project:
 
-1. Open SQL Server Management Studio and login using your Windows authentication under Authentication and `(localdb)\MSSQLLocalDB` under Server Name. Go to File &rightarrow; Open &rightarrow; File. Choose the `NodesTable.sql` script file, click on `Open` and then press `F5` to run it.
+1. Open SQL Server Management Studio and login using your Windows authentication under Authentication and `(localdb)\MSSQLLocalDB` under Server Name. 
 
-2. Go to File &rightarrow; Open &rightarrow; File. Choose the `NodesTableData.sql` script file, click on `Open` and then press `F5` to run it.
+2. Go to File &rightarrow; Open &rightarrow; File. Choose the `NodeSimulationDatabase.sql` script file in the directory `SQL`, click on `Open` and then press `F5` to run it.
+
+3. Go to File &rightarrow; Open &rightarrow; File. Choose the `NodesTable.sql` script file in the directory `SQL`, click on `Open` and then press `F5` to run it.
+
+2. Go to File &rightarrow; Open &rightarrow; File. Choose the `NodesTableData.sql` script file in the directory `SQL`, click on `Open` and then press `F5` to run it.
 
 3. Open the solution file `NodeSimulation.sln` located in the `NodeSimulation` directory, in Visual Studio. **NOTE: Please make sure that you have the option "Allow Nuget to download missing packages" enabled in order to download the Nuget packages used in this project. This can be enabled by going to Tools &rightarrow; Options &rightarrow; Nuget Package Manager &rightarrow; General.** Go to the Build menu &rightarrow; and click on Build Solution. Visual Studio should now start downloading any dependencies necessary to run the application.  If you get any errors after loading the project, go to the Build menu again &rightarrow; click on Clean Solution. Once Visual Studio has finished cleaning up the solution, go to the Build menu &rightarrow; and click on Rebuild Solution. Once that has been completed, press `CTRL + F5` in order to run the application.
