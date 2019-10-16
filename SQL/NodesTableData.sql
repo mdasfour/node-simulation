@@ -1,0 +1,22 @@
+﻿USE [NodeSimulation]
+GO
+SET IDENTITY_INSERT [dbo].[Nodes] ON 
+GO
+INSERT [dbo].[Nodes] ([Id], [NodeId], [City], [OnlineTime], [IsOnline], [UploadUtilization], [MaxUploadUtilization], [DownloadUtilization], [MaxDownloadUtilization], [ErrorRate], [MaxErrorRate], [ConnectedClients], [MaxConnectedClients], [Deleted], [InsertedDT], [UpdatedDT], [DeletedDT]) VALUES (1, 50, N'Chatham', CAST(N'2019-10-03T23:55:38.873' AS DateTime), 0, CAST(0.00 AS Decimal(7, 2)), CAST(43.00 AS Decimal(7, 2)), CAST(0.00 AS Decimal(7, 2)), CAST(87.00 AS Decimal(7, 2)), CAST(0.00 AS Decimal(7, 2)), CAST(654.00 AS Decimal(7, 2)), 0, 98, 0, GETDATE(), NULL, NULL)
+GO
+INSERT [dbo].[Nodes] ([Id], [NodeId], [City], [OnlineTime], [IsOnline], [UploadUtilization], [MaxUploadUtilization], [DownloadUtilization], [MaxDownloadUtilization], [ErrorRate], [MaxErrorRate], [ConnectedClients], [MaxConnectedClients], [Deleted], [InsertedDT], [UpdatedDT], [DeletedDT]) VALUES (2, 250, N'London', CAST(N'2019-10-06T17:59:14.153' AS DateTime), 0, CAST(0.00 AS Decimal(7, 2)), NULL, CAST(0.00 AS Decimal(7, 2)), NULL, CAST(0.00 AS Decimal(7, 2)), NULL, 0, NULL, 0, GETDATE(), NULL, NULL)
+GO
+INSERT [dbo].[Nodes] ([Id], [NodeId], [City], [OnlineTime], [IsOnline], [UploadUtilization], [MaxUploadUtilization], [DownloadUtilization], [MaxDownloadUtilization], [ErrorRate], [MaxErrorRate], [ConnectedClients], [MaxConnectedClients], [Deleted], [InsertedDT], [UpdatedDT], [DeletedDT]) VALUES (3, 200, N'Woodstock', CAST(N'2019-10-07T23:44:29.220' AS DateTime), 0, CAST(0.00 AS Decimal(7, 2)), NULL, CAST(0.00 AS Decimal(7, 2)), NULL, CAST(0.00 AS Decimal(7, 2)), NULL, 0, NULL, 0, GETDATE(), NULL, NULL)
+GO
+INSERT [dbo].[Nodes] ([Id], [NodeId], [City], [OnlineTime], [IsOnline], [UploadUtilization], [MaxUploadUtilization], [DownloadUtilization], [MaxDownloadUtilization], [ErrorRate], [MaxErrorRate], [ConnectedClients], [MaxConnectedClients], [Deleted], [InsertedDT], [UpdatedDT], [DeletedDT]) VALUES (4, 300, N'Toronto', CAST(N'2019-10-07T23:45:05.347' AS DateTime), 1, CAST(40.12 AS Decimal(7, 2)), CAST(24.00 AS Decimal(7, 2)), CAST(71.54 AS Decimal(7, 2)), CAST(24.00 AS Decimal(7, 2)), CAST(64.16 AS Decimal(7, 2)), CAST(24.00 AS Decimal(7, 2)), 221, 24, 0, GETDATE(), NULL, NULL)
+GO
+INSERT [dbo].[Nodes] ([Id], [NodeId], [City], [OnlineTime], [IsOnline], [UploadUtilization], [MaxUploadUtilization], [DownloadUtilization], [MaxDownloadUtilization], [ErrorRate], [MaxErrorRate], [ConnectedClients], [MaxConnectedClients], [Deleted], [InsertedDT], [UpdatedDT], [DeletedDT]) VALUES (5, 350, N'Ottawa', CAST(N'2019-10-07T23:50:32.960' AS DateTime), 0, CAST(0.00 AS Decimal(7, 2)), NULL, CAST(0.00 AS Decimal(7, 2)), NULL, CAST(0.00 AS Decimal(7, 2)), NULL, 0, NULL, 0, GETDATE(), NULL, NULL)
+GO
+INSERT [dbo].[Nodes] ([Id], [NodeId], [City], [OnlineTime], [IsOnline], [UploadUtilization], [MaxUploadUtilization], [DownloadUtilization], [MaxDownloadUtilization], [ErrorRate], [MaxErrorRate], [ConnectedClients], [MaxConnectedClients], [Deleted], [InsertedDT], [UpdatedDT], [DeletedDT]) VALUES (6, 400, N'Mississauga', CAST(N'2019-10-08T01:05:06.710' AS DateTime), 0, CAST(0.00 AS Decimal(7, 2)), CAST(34.32 AS Decimal(7, 2)), CAST(0.00 AS Decimal(7, 2)), CAST(987.65 AS Decimal(7, 2)), CAST(0.00 AS Decimal(7, 2)), CAST(23.45 AS Decimal(7, 2)), 0, NULL, 0, GETDATE(), NULL, NULL)
+GO
+INSERT [dbo].[Nodes] ([Id], [NodeId], [City], [OnlineTime], [IsOnline], [UploadUtilization], [MaxUploadUtilization], [DownloadUtilization], [MaxDownloadUtilization], [ErrorRate], [MaxErrorRate], [ConnectedClients], [MaxConnectedClients], [Deleted], [InsertedDT], [UpdatedDT], [DeletedDT]) VALUES (7, 450, N'Niagara Falls', CAST(N'2019-10-08T01:47:18.110' AS DateTime), 0, CAST(0.00 AS Decimal(7, 2)), CAST(65.32 AS Decimal(7, 2)), CAST(0.00 AS Decimal(7, 2)), CAST(435.23 AS Decimal(7, 2)), CAST(0.00 AS Decimal(7, 2)), CAST(15.21 AS Decimal(7, 2)), 0, 505, 0, GETDATE(), NULL, NULL)
+GO
+INSERT [dbo].[Nodes] ([Id], [NodeId], [City], [OnlineTime], [IsOnline], [UploadUtilization], [MaxUploadUtilization], [DownloadUtilization], [MaxDownloadUtilization], [ErrorRate], [MaxErrorRate], [ConnectedClients], [MaxConnectedClients], [Deleted], [InsertedDT], [UpdatedDT], [DeletedDT]) VALUES (8, 500, N'Waterloo', CAST(N'2019-10-08T01:49:46.320' AS DateTime), 0, CAST(0.00 AS Decimal(7, 2)), CAST(55.55 AS Decimal(7, 2)), CAST(0.00 AS Decimal(7, 2)), CAST(345.56 AS Decimal(7, 2)), CAST(0.00 AS Decimal(7, 2)), CAST(23.21 AS Decimal(7, 2)), 0, 505, 0, GETDATE(), NULL, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[Nodes] OFF
+GO

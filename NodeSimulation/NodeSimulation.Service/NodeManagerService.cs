@@ -9,6 +9,7 @@ namespace NodeSimulation.Service
 {
 	public class NodeManagerService : INodeManager
 	{
+		//This method can retrieve either a single node by passing in the nodeId or all the nodes that have not been deleted (soft deleted)
 		public List<NodesDAO> GetNodes(int? nodeId)
 		{
 			using (var context = new NodeSimulationContext())
@@ -22,12 +23,16 @@ namespace NodeSimulation.Service
 					IsOnline = n.IsOnline,
 					UploadUtilization = n.UploadUtilization,
 					MaxUploadUtilization = n.MaxUploadUtilization,
+					UploadUtilizationExceeded = n.UploadUtilizationExceeded,
 					DownloadUtilization = n.DownloadUtilization,
 					MaxDownloadUtilization = n.MaxDownloadUtilization,
+					DownloadUtilizationExceeded = n.DownloadUtilizationExceeded,
 					ErrorRate = n.ErrorRate,
 					MaxErrorRate = n.MaxErrorRate,
+					ErrorRateExceeded = n.ErrorRateExceeded,
 					ConnectedClients = n.ConnectedClients,
 					MaxConnectedClients = n.MaxConnectedClients,
+					ConnectedClientsExceeded = n.ConnectedClientsExceeded,
 					Deleted = n.Deleted
 				}).Where(n => !n.Deleted && (!nodeId.HasValue || (n.NodeId == nodeId))).OrderBy(n => n.NodeId).ToList();
 
@@ -36,40 +41,80 @@ namespace NodeSimulation.Service
 			}
 		}
 
-		//public string AddNode(INode node)
-		//{
-		//	//Ask about Node constructor with parameters
-		//	//Call resetMetrics after the creation of the node
+		public string AddNode(Nodes node)
+		{
 
-		//	using (var context = new NodeSimulationContext())
-		//	{
-		//		//Check if the Node Id the user has chosen exists in the database before inserting
-		//		var checkIfNodeIdExists = context.Nodes.Where(n => n.NodeId == node.NodeId).FirstOrDefault();
+			try
+			{
+				using (var context = new NodeSimulationContext())
+				{
+					string nodeExistsMessage = string.Format("Error! Node {0} exists.  Please choose a different Node Id and try again", node.NodeId);
 
-		//		if (checkIfNodeIdExists != null)
-		//		{
+					//Check if the Node Id the user has chosen exists in the database before inserting
+					var checkIfNodeExists = context.Nodes.Where(n => n.NodeId == node.NodeId).FirstOrDefault();
 
-		//			if ((!node.NodeId.Equals("") && node.NodeId > 0) && (!String.IsNullOrEmpty(node.City.Trim()) && !node.City.Trim().Equals("")))
-		//			{
-		//				//Node createNode = new Node(node.NodeId, node.City);
+					if (checkIfNodeExists == null)
+					{
+						string successMessage = string.Format("Node {0} has been successfully created", node.NodeId);
+						string nodeNullObjectMessage = string.Format("Error! Could not create Node {0}.  Please try again", node.NodeId);
 
-		//				Node createNode = new Node(node.NodeId, node.City);
+						if ((!node.NodeId.Equals("") && node.NodeId > 0) && (!String.IsNullOrEmpty(node.City.Trim()) && !node.City.Trim().Equals("")))
+						{
+							//Create an object of the node class and instantiate with the node Id and City that the user has chosen
+							Node createNode = new Node(node.NodeId, node.City);
 
-		//				createNode.SetOffline();
-		//				//Metrics
+							//Create an object of the model class and instantiate it
+							Nodes newNode = new Nodes();
+
+							if (createNode != null)
+							{
+								newNode.NodeId = createNode.NodeId;
+								newNode.City = createNode.City;
+								newNode.OnlineTime = createNode.OnlineTime;
+								newNode.IsOnline = createNode.IsOnline;
+								newNode.UploadUtilization = createNode.UploadUtilization;
+								newNode.MaxUploadUtilization = node.MaxUploadUtilization;
+								newNode.DownloadUtilization = createNode.DownloadUtilization;
+								newNode.MaxDownloadUtilization = node.MaxDownloadUtilization;
+								newNode.ErrorRate = createNode.ErrorRate;
+								newNode.MaxErrorRate = node.MaxErrorRate;
+								newNode.ConnectedClients = createNode.ConnectedClients;
+								newNode.MaxConnectedClients = node.MaxConnectedClients;
+								newNode.Deleted = false;
+								newNode.InsertedDT = DateTime.Now;
+
+								context.Add(newNode);
+								context.SaveChanges();
+
+								return successMessage;
+
+							}
+							else
+							{
+								throw new Exception(nodeNullObjectMessage);
+							}
+						}
+						else
+						{
+							throw new Exception(String.Format("A node must contain at minimum a Node Id and a City.  Please make sure that you have entered a Node Id and City and then try again."));
+						}
+
+					}
+					else
+					{
+
+						return nodeExistsMessage;
+					}
 
 
-		//			}
-		//			else
-		//			{
-		//				throw new Exception(String.Format("A node must contain at a minimum a Node Id and a City.  Please make sure that you have entered a Node Id and City and then try again."));
-		//			}
+				}
+			}
+			catch (Exception ex)
+			{
+				return ex.Message;
+			}
 
-		//		}
-
-
-		//	}
-		//}
+		}
 
 		public string RemoveNode(int nodeId)
 		{
@@ -120,7 +165,7 @@ namespace NodeSimulation.Service
 
 					try
 					{
-						//Retrieve not from database
+						//Retrieve node from database
 						var node = context.Nodes.Where(n => n.NodeId == nodeId).FirstOrDefault();
 
 						if (node != null)
@@ -186,7 +231,7 @@ namespace NodeSimulation.Service
 
 					try
 					{
-						//Retrieve not from database
+						//Retrieve node from database
 						var node = context.Nodes.Where(n => n.NodeId == nodeId).FirstOrDefault();
 
 						if (node != null)
@@ -199,7 +244,7 @@ namespace NodeSimulation.Service
 							//Set Online status to true and insert simulated metrics into node object
 							setOnlineAndStats.SetOffline(node);
 
-							if (!node.IsOnline)
+							if (!setOnlineAndStats.IsOnline)
 							{
 								//Update the UpdateDT property in the object
 								node.UpdatedDT = DateTime.Now;

@@ -23,7 +23,8 @@ namespace NodeSimulation
 
 			services.AddApiVersioning();
 
-			services.AddApiVersioning(o => {
+			services.AddApiVersioning(o =>
+			{
 
 				o.ReportApiVersions = true;
 				o.ApiVersionReader = new UrlSegmentApiVersionReader();

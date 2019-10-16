@@ -75,13 +75,19 @@ namespace NodeSimulation.Data.Models
                     .IsRequired()
                     .HasMaxLength(100);
 
+                entity.Property(e => e.ConnectedClientsExceeded).HasComputedColumnSql("(case when [ConnectedClients]>[MaxConnectedClients] AND [Deleted]=(0) then CONVERT([bit],(1)) else CONVERT([bit],(0)) end)");
+
                 entity.Property(e => e.DeletedDT)
                     .HasColumnName("DeletedDT")
                     .HasColumnType("datetime");
 
                 entity.Property(e => e.DownloadUtilization).HasColumnType("decimal(7, 2)");
 
+                entity.Property(e => e.DownloadUtilizationExceeded).HasComputedColumnSql("(case when [DownloadUtilization]>[MaxDownloadUtilization] AND [Deleted]=(0) then CONVERT([bit],(1)) else CONVERT([bit],(0)) end)");
+
                 entity.Property(e => e.ErrorRate).HasColumnType("decimal(7, 2)");
+
+                entity.Property(e => e.ErrorRateExceeded).HasComputedColumnSql("(case when [ErrorRate]>[MaxErrorRate] AND [Deleted]=(0) then CONVERT([bit],(1)) else CONVERT([bit],(0)) end)");
 
                 entity.Property(e => e.InsertedDT)
                     .HasColumnName("InsertedDT")
@@ -101,6 +107,8 @@ namespace NodeSimulation.Data.Models
                     .HasColumnType("datetime");
 
                 entity.Property(e => e.UploadUtilization).HasColumnType("decimal(7, 2)");
+
+                entity.Property(e => e.UploadUtilizationExceeded).HasComputedColumnSql("(case when [UploadUtilization]>[MaxUploadUtilization] AND [Deleted]=(0) then CONVERT([bit],(1)) else CONVERT([bit],(0)) end)");
             });
         }
     }
