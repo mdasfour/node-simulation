@@ -20,7 +20,7 @@ I was given non-functioning boilerplate console-based code written in C# using .
 - WebAPI.
 - Entity Framework Core.
 - SQL Server Express.
-- Vue.js and Vuetify on the frontend.
+- [Vue.js and Vuetify on the frontend.](https://github.com/mdasfour/node-simulation-ui/)
 
 The project is divided into three separate projects that reference each other:
 
