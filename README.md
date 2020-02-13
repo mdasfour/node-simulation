@@ -2,7 +2,7 @@
 
 ## Description:
 
-This application is based on a coding exercise that I was given.  Its goal was to build an application to simulate nodes on a network and to give the team that is in charge of monitoring these nodes the ability to do the following:
+This application is based on a technical assessment that I was given.  Its goal was to build an application to simulate nodes on a network and to give the team that is in charge of monitoring these nodes the ability to do the following:
 
 - Add/Remove Nodes.
 - Bring a node online.

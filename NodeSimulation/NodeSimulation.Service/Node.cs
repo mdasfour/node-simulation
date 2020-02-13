@@ -65,6 +65,10 @@ namespace NodeSimulation.Service
 		#endregion
 
 		#region Private Methods
+		/*	Method: ResetMetrics
+		 *	Parameters: None
+		 *	Description: Sets metrics for a newly created node.
+		 */
 		private void ResetMetrics()
 		{
 			UploadUtilization = 0.0M;
@@ -74,25 +78,40 @@ namespace NodeSimulation.Service
 
 		}
 
+		/*	Method: ResetMetrics
+		 *	Parameters: node object of type Nodes
+		 *	Description: Sets metrics for an existing node to 0 after setting its status to offline.
+		 */
 		private Nodes ResetMetrics(Nodes node)
 		{
-			// Clear metrics back to 0.
-			node.UploadUtilization = 0.0M;
-			node.DownloadUtilization = 0.0M;
-			node.ErrorRate = 0.0M;
-			node.ConnectedClients = 0;
+			if (node != null)
+			{
+				// Clear metrics back to 0.
+				node.UploadUtilization = 0.0M;
+				node.DownloadUtilization = 0.0M;
+				node.ErrorRate = 0.0M;
+				node.ConnectedClients = 0;
+
+
+			}
 
 			return node;
+
 		}
 
+		/*	Method: SimulateRandomMetrics
+		 *	Parameters: node object of type Nodes
+		 *	Description: Sets metrics for a node when its online status is set to true.
+		 */
 		public Nodes SimulateRandomMetrics(Nodes node)
 		{
 			// Generate random values to simulate metrics.
-			if(node != null) { 
+			if (node != null)
+			{
 				node.ConnectedClients = _rnd.Next(1, 500);
-				node.UploadUtilization = (decimal)_rnd.NextDouble()*100;
-				node.DownloadUtilization = (decimal)_rnd.NextDouble()*100;
-				node.ErrorRate = (decimal)_rnd.NextDouble()*100;
+				node.UploadUtilization = (decimal)_rnd.NextDouble() * 100;
+				node.DownloadUtilization = (decimal)_rnd.NextDouble() * 100;
+				node.ErrorRate = (decimal)_rnd.NextDouble() * 100;
 			}
 
 			return node;

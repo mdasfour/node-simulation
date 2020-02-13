@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NodeSimulation.Data.Models
 {
+	//Model file for Nodes table
 	public partial class Nodes
 	{
 		[Key]

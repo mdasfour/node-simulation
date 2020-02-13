@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NodeSimulation.Data.Models
 {
+	//Model file of what parameters to return to the frontend
 	public class NodesDAO
 	{
 		[Key]

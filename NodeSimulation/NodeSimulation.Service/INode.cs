@@ -5,7 +5,14 @@ namespace NodeSimulation.Service
 {
 	public interface INode
 	{
+		/// <summary>
+		/// Class variable for nodeId
+		/// </summary>
 		int NodeId { get; }
+
+		/// <summary>
+		/// Class variable for city
+		/// </summary>
 		string City { get; }
 
 		/// <summary>
