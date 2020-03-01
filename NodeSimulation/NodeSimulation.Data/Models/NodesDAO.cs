@@ -24,6 +24,6 @@ namespace NodeSimulation.Data.Models
 		public int? ConnectedClients { get; set; }
 		public int? MaxConnectedClients { get; set; }
 		public bool? ConnectedClientsExceeded { get; set; }
-		public bool Deleted { get; set; }
+		public bool Deleted { get; set; } = false;
 	}
 }
