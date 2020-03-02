@@ -1,4 +1,5 @@
 ﻿using KellermanSoftware.CompareNetObjects;
+using Newtonsoft.Json;
 using NodeSimulation.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -190,78 +191,66 @@ namespace NodeSimulation.Service
 		 *	Parameters: nodeId
 		 *	Description: Sets the node status in the column IsOnline to true and assigns metrics to the node.
 		 */
-		public string SetNodeOnline(int? nodeId)
+		public string SetNodeOnline(Nodes nodeObject)
 		{
-			//Error message to return to the frontend if no nodeId is passed
-			string noNodeId = "Error! No Node Id.  Please make sure there is a Node Id before proceeding.";
 
-			//If the nodeId variable has a value, proceed to set the online status of the node and assign the metrics to it
-			if (nodeId.HasValue)
+			//Create an instance of the NodeSimulationContext class and dispose of object properly after use by using 'using' keyword
+			using (var context = new NodeSimulationContext())
 			{
-				//Create an instance of the NodeSimulationContext class and dispose of object properly after use by using 'using' keyword
-				using (var context = new NodeSimulationContext())
+				//Messages to return to the frontend
+				string successMessage = string.Format("Node {0} is online", nodeObject.NodeId);
+				string nodeNotFound = string.Format("Error! Node {0} does not exist", nodeObject.NodeId);
+				string notOnlineError = string.Format("Error! Could not switch Node {0} online.  Please try again.", nodeObject.NodeId);
+
+				try
 				{
-					//Messages to return to the frontend
-					string successMessage = string.Format("Node {0} is online", nodeId);
-					string nodeNotFound = string.Format("Error! Node {0} does not exist", nodeId);
-					string notOnlineError = string.Format("Error! Could not switch Node {0} online.  Please try again.", nodeId);
+					//Retrieve node from database
+					var node = context.Nodes.Where(n => n.NodeId == nodeObject.NodeId).FirstOrDefault();
 
-					try
+					//If the node has been found, proceed to update
+					if (node != null)
 					{
-						//Retrieve node from database
-						var node = context.Nodes.Where(n => n.NodeId == nodeId).FirstOrDefault();
 
-						//If the node has been found, proceed to update
-						if (node != null)
+
+						//Create an object from the Node class and instantiate it
+						Node setOnlineAndStats = new Node(node.NodeId, node.City);
+
+						//Set Online status to true and insert simulated metrics into node object
+						setOnlineAndStats.SetOnline(node);
+
+
+						//If the node has an online status of true, update the node object and save it to the database
+						if (node.IsOnline)
 						{
+							//Update the UpdateDT property in the object
+							node.UpdatedDT = DateTime.Now;
 
+							context.Update(node);
 
-							//Create an object from the Node class and instantiate it
-							Node setOnlineAndStats = new Node(node.NodeId, node.City);
+							context.SaveChanges();
 
-							//Set Online status to true and insert simulated metrics into node object
-							setOnlineAndStats.SetOnline(node);
-
-
-							//If the node has an online status of true, update the node object and save it to the database
-							if (node.IsOnline)
-							{
-								//Update the UpdateDT property in the object
-								node.UpdatedDT = DateTime.Now;
-
-								context.Update(node);
-
-								context.SaveChanges();
-
-								return successMessage;
-							}
-							//If the node is not online, throw an exception and return a message that the node is not online
-							else
-							{
-								throw new Exception(notOnlineError);
-							}
-
+							return successMessage;
 						}
-						//If the node was not found, throw an exception and return error message to the frontend
+						//If the node is not online, throw an exception and return a message that the node is not online
 						else
 						{
-							throw new Exception(nodeNotFound);
+							throw new Exception(notOnlineError);
 						}
+
 					}
-					//If an exception is thrown, display message to the user
-					catch (Exception ex)
+					//If the node was not found, throw an exception and return error message to the frontend
+					else
 					{
-						return ex.Message;
+						throw new Exception(nodeNotFound);
 					}
-
 				}
-			}
-			//If no nodeId is passed return error message to the frontend
-			else
-			{
-				return noNodeId;
-			}
+				//If an exception is thrown, display message to the user
+				catch (Exception ex)
+				{
+					return ex.Message;
+				}
 
+			}
 
 		}
 
@@ -269,74 +258,67 @@ namespace NodeSimulation.Service
 		 *	Parameters: nodeId
 		 *	Description: Sets the node status to offline
 		 */
-		public string SetNodeOffline(int? nodeId)
+		public string SetNodeOffline(Nodes nodeObject)
 		{
 			//Error message to return to the frontend, if no nodeId is found
-			string noNodeId = "Error! No Node Id.  Please make sure there is a Node Id before proceeding.";
+			//string noNodeId = "Error! No Node Id.  Please make sure there is a Node Id before proceeding.";
 
-			//If nodeId has a value, proceed to set the node to offline
-			if (nodeId.HasValue)
+
+			//Create an instance of the NodeSimulationContext class and dispose of object properly after use by using 'using' keyword
+			using (var context = new NodeSimulationContext())
 			{
-				//Create an instance of the NodeSimulationContext class and dispose of object properly after use by using 'using' keyword
-				using (var context = new NodeSimulationContext())
+				//Messages to return to the frontend
+				string successMessage = string.Format("Node {0} is offline", nodeObject.NodeId);
+				string nodeNotFound = string.Format("Error! Node {0} does not exist", nodeObject.NodeId);
+				string notOfflineError = string.Format("Error! Could not switch Node {0} offline.  Please try again.", nodeObject.NodeId);
+
+				try
 				{
-					//Messages to return to the frontend
-					string successMessage = string.Format("Node {0} is offline", nodeId);
-					string nodeNotFound = string.Format("Error! Node {0} does not exist", nodeId);
-					string notOfflineError = string.Format("Error! Could not switch Node {0} offline.  Please try again.", nodeId);
 
-					try
+					//Retrieve node from database
+					var node = context.Nodes.Where(n => n.NodeId == nodeObject.NodeId).FirstOrDefault();
+
+					//If node is not null, then proceed to set the node to offline
+					if (node != null)
 					{
-						//Retrieve node from database
-						var node = context.Nodes.Where(n => n.NodeId == nodeId).FirstOrDefault();
 
-						//If node is not null, then proceed to set the node to offline
-						if (node != null)
+
+						//Create an object from the Node class and instantiate it
+						Node setOnlineAndStats = new Node(node.NodeId, node.City);
+
+						//Set Online status to true and insert simulated metrics into node object
+						setOnlineAndStats.SetOffline(node);
+
+						//If the node is offline, update the node object and save it in the database and return success message to the frontend
+						if (!setOnlineAndStats.IsOnline)
 						{
+							node.UpdatedDT = DateTime.Now;
 
+							context.Update(node);
 
-							//Create an object from the Node class and instantiate it
-							Node setOnlineAndStats = new Node(node.NodeId, node.City);
+							context.SaveChanges();
 
-							//Set Online status to true and insert simulated metrics into node object
-							setOnlineAndStats.SetOffline(node);
-
-							//If the node is offline, update the node object and save it in the database and return success message to the frontend
-							if (!setOnlineAndStats.IsOnline)
-							{
-								node.UpdatedDT = DateTime.Now;
-
-								context.Update(node);
-
-								context.SaveChanges();
-
-								return successMessage;
-							}
-							//If the node is online throw an exception and return message to the frontend
-							else
-							{
-								throw new Exception(notOfflineError);
-							}
-
+							return successMessage;
 						}
-						//If the node has not been found in the database, throw an exception and return message to the frontend
+						//If the node is online throw an exception and return message to the frontend
 						else
 						{
-							throw new Exception(nodeNotFound);
+							throw new Exception(notOfflineError);
 						}
-					}
-					//If an exception is thrown, display message to the user
-					catch (Exception ex)
-					{
-						return ex.Message;
-					}
 
+					}
+					//If the node has not been found in the database, throw an exception and return message to the frontend
+					else
+					{
+						throw new Exception(nodeNotFound);
+					}
 				}
-			}
-			//If no nodeId is passed, return error message to the frontend
-			else
-			{
-				return noNodeId;
+				//If an exception is thrown, display message to the user
+				catch (Exception ex)
+				{
+					return ex.Message;
+				}
+
 			}
 		}
 

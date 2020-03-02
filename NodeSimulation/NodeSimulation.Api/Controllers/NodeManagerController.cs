@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using NodeSimulation.Data.Models;
@@ -18,7 +19,7 @@ namespace NodeSimulation.Api.Controllers
 		 *	Description: Endpoint for GetNodes method in NodeManagerService class
 		 */
 		[HttpGet]
-		[Route("Nodes")]
+		[Route("Nodes/{nodeId?}")]
 		public List<NodesDAO> Nodes(int? nodeId)
 		{
 			//Create an instance of the NodeManagerService class
@@ -47,8 +48,8 @@ namespace NodeSimulation.Api.Controllers
 		 *	Parameters: nodeId
 		 *	Description: Endpoint for RemoveNode method in NodeManagerService class
 		 */
-		[HttpPost]
-		[Route("RemoveNode")]
+		[HttpDelete]
+		[Route("RemoveNode/{nodeId}")]
 		public string RemoveNode(int nodeId)
 		{
 			//Create an instance of the NodeManagerService class
@@ -56,6 +57,7 @@ namespace NodeSimulation.Api.Controllers
 
 			//Returns the status of whether the node was removed successfully or not from the RemoveNode method in the NodeManagerService class
 			return node.RemoveNode(nodeId);
+
 		}
 
 		/*	Method: MaxLimits
@@ -81,13 +83,13 @@ namespace NodeSimulation.Api.Controllers
 		 */
 		[HttpPost]
 		[Route("Online")]
-		public string Online(int? nodeId)
+		public string Online([FromBody]Nodes nodeObject)
 		{
 			//Create an instance of the NodeManagerService class
 			NodeManagerService node = new NodeManagerService();
 
 			//Returns the status of whether the node's status was set successfully to online or not from the SetNodeOnline method in the NodeManagerService class
-			return node.SetNodeOnline(nodeId);
+			return node.SetNodeOnline(nodeObject);
 		}
 
 		/*	Method: Offline
@@ -96,13 +98,14 @@ namespace NodeSimulation.Api.Controllers
 		 */
 		[HttpPost]
 		[Route("Offline")]
-		public string Offline(int? nodeId)
+		public string Offline([FromBody]Nodes nodeObject)
 		{
 			//Create an instance of the NodeManagerService class
 			NodeManagerService node = new NodeManagerService();
 
 			//Returns the status of whether the node's status was set successfully to offline or not from the SetNodeOffline method in the NodeManagerService class
-			return node.SetNodeOffline(nodeId);
+			return node.SetNodeOffline(nodeObject);
+
 		}
 	}
 }
