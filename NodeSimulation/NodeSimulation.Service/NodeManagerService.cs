@@ -1,5 +1,4 @@
 ﻿using KellermanSoftware.CompareNetObjects;
-using Newtonsoft.Json;
 using NodeSimulation.Data.Models;
 using System;
 using System.Collections.Generic;
