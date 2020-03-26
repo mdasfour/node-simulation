@@ -19,6 +19,21 @@ namespace NodeSimulation
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+
+			services.AddCors(options =>
+
+			options.AddDefaultPolicy(
+					builder =>
+					{
+						/* AllowAnyOrigin is only used since this is development.  If this was going to be deployed to production,
+						 * WithOrigin and the domains for this app would be specified.
+						 */
+						builder.AllowAnyOrigin()
+						.AllowAnyHeader()
+						.WithMethods("GET", "POST", "PATCH", "PUT", "DELETE");
+					}));
+
+
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 			services.AddApiVersioning();
@@ -46,6 +61,9 @@ namespace NodeSimulation
 			}
 
 			app.UseHttpsRedirection();
+
+			app.UseCors();
+
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute("default", "{controller}/v{apiVersion}/{action}/{id?}");

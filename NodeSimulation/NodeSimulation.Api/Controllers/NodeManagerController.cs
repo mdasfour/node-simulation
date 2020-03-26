@@ -11,7 +11,7 @@ namespace NodeSimulation.Api.Controllers
 	[ApiVersion("1")]
 	[Route("[controller]/v{version:apiVersion}/")]
 	[ApiController]
-	[DisableCors]
+	[EnableCors]
 	public class NodeManagerController : ControllerBase
 	{
 		/*	Method: Nodes
@@ -81,8 +81,8 @@ namespace NodeSimulation.Api.Controllers
 		 *	Parameters: nodeId
 		 *	Description: Endpoint for SetNodeOnline method in NodeManagerService class
 		 */
-		[HttpPost]
-		[Route("Online")]
+		[HttpPatch]
+		[Route("Online/{nodeObject}")]
 		public string Online([FromBody]Nodes nodeObject)
 		{
 			//Create an instance of the NodeManagerService class
@@ -96,8 +96,8 @@ namespace NodeSimulation.Api.Controllers
 		 *	Parameters: nodeId
 		 *	Description: Endpoint for SetNodeOffline method in NodeManagerService class
 		 */
-		[HttpPost]
-		[Route("Offline")]
+		[HttpPatch]
+		[Route("Offline/{nodeObject}")]
 		public string Offline([FromBody]Nodes nodeObject)
 		{
 			//Create an instance of the NodeManagerService class
