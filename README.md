@@ -16,7 +16,7 @@ This application is based on a technical assessment that I was given.  Its goal 
 I was given non-functioning boilerplate console-based code written in C# using .Net Core 2.2.  I had the choice of whether to use or discard any or all of the code as I wished.  I took the boilerplate code and modified it where I saw fit.  Futhermore, I built the application as a web application from the ground up using the following technologies:
 
 - .NET Core 2.2.402.
-- Versioned API.
+- Versioned RESTful API.
 - Web API 2.
 - Entity Framework Core.
 - SQL Server Express.
