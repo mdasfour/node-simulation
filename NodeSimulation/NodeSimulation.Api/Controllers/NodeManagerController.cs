@@ -78,18 +78,18 @@ namespace NodeSimulation.Api.Controllers
 		}
 
 		/*	Method: Online
-		 *	Parameters: nodeId
+		 *	Parameters: nodeObject of type Nodes
 		 *	Description: Endpoint for SetNodeOnline method in NodeManagerService class
 		 */
 		[HttpPatch]
-		[Route("Online/{nodeObject}")]
-		public string Online([FromBody]Nodes nodeObject)
+		[Route("Online/{nodeId}")]
+		public string Online(int nodeId)
 		{
 			//Create an instance of the NodeManagerService class
 			NodeManagerService node = new NodeManagerService();
 
 			//Returns the status of whether the node's status was set successfully to online or not from the SetNodeOnline method in the NodeManagerService class
-			return node.SetNodeOnline(nodeObject);
+			return node.SetNodeOnline(nodeId);
 		}
 
 		/*	Method: Offline
@@ -97,14 +97,14 @@ namespace NodeSimulation.Api.Controllers
 		 *	Description: Endpoint for SetNodeOffline method in NodeManagerService class
 		 */
 		[HttpPatch]
-		[Route("Offline/{nodeObject}")]
-		public string Offline([FromBody]Nodes nodeObject)
+		[Route("Offline/{nodeId}")]
+		public string Offline(int nodeId)
 		{
 			//Create an instance of the NodeManagerService class
 			NodeManagerService node = new NodeManagerService();
 
 			//Returns the status of whether the node's status was set successfully to offline or not from the SetNodeOffline method in the NodeManagerService class
-			return node.SetNodeOffline(nodeObject);
+			return node.SetNodeOffline(nodeId);
 
 		}
 	}

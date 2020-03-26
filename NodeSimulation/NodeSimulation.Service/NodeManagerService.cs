@@ -190,21 +190,21 @@ namespace NodeSimulation.Service
 		 *	Parameters: nodeId
 		 *	Description: Sets the node status in the column IsOnline to true and assigns metrics to the node.
 		 */
-		public string SetNodeOnline(Nodes nodeObject)
+		public string SetNodeOnline(int nodeId)
 		{
 
 			//Create an instance of the NodeSimulationContext class and dispose of object properly after use by using 'using' keyword
 			using (var context = new NodeSimulationContext())
 			{
 				//Messages to return to the frontend
-				string successMessage = string.Format("Node {0} is online", nodeObject.NodeId);
-				string nodeNotFound = string.Format("Error! Node {0} does not exist", nodeObject.NodeId);
-				string notOnlineError = string.Format("Error! Could not switch Node {0} online.  Please try again.", nodeObject.NodeId);
+				string successMessage = string.Format("Node {0} is online", nodeId);
+				string nodeNotFound = string.Format("Error! Node {0} does not exist", nodeId);
+				string notOnlineError = string.Format("Error! Could not switch Node {0} online.  Please try again.", nodeId);
 
 				try
 				{
 					//Retrieve node from database
-					var node = context.Nodes.Where(n => n.NodeId == nodeObject.NodeId).FirstOrDefault();
+					var node = context.Nodes.Where(n => n.NodeId == nodeId).FirstOrDefault();
 
 					//If the node has been found, proceed to update
 					if (node != null)
@@ -257,25 +257,22 @@ namespace NodeSimulation.Service
 		 *	Parameters: nodeId
 		 *	Description: Sets the node status to offline
 		 */
-		public string SetNodeOffline(Nodes nodeObject)
+		public string SetNodeOffline(int nodeId)
 		{
-			//Error message to return to the frontend, if no nodeId is found
-			//string noNodeId = "Error! No Node Id.  Please make sure there is a Node Id before proceeding.";
-
 
 			//Create an instance of the NodeSimulationContext class and dispose of object properly after use by using 'using' keyword
 			using (var context = new NodeSimulationContext())
 			{
 				//Messages to return to the frontend
-				string successMessage = string.Format("Node {0} is offline", nodeObject.NodeId);
-				string nodeNotFound = string.Format("Error! Node {0} does not exist", nodeObject.NodeId);
-				string notOfflineError = string.Format("Error! Could not switch Node {0} offline.  Please try again.", nodeObject.NodeId);
+				string successMessage = string.Format("Node {0} is offline", nodeId);
+				string nodeNotFound = string.Format("Error! Node {0} does not exist", nodeId);
+				string notOfflineError = string.Format("Error! Could not switch Node {0} offline.  Please try again.", nodeId);
 
 				try
 				{
 
 					//Retrieve node from database
-					var node = context.Nodes.Where(n => n.NodeId == nodeObject.NodeId).FirstOrDefault();
+					var node = context.Nodes.Where(n => n.NodeId == nodeId).FirstOrDefault();
 
 					//If node is not null, then proceed to set the node to offline
 					if (node != null)
